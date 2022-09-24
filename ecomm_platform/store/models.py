@@ -6,7 +6,7 @@ def get_upload_path(instance, filename):
     if hasattr(instance, 'cat_model'):
         return f'images/cat/{instance.album.cat_model.name}/{filename}'
     elif hasattr(instance, 'prod_model'):
-        return f'images/cat/{instance.album.prod_model.name}/{filename}'
+        return f'images/prod/{instance.album.prod_model.name}/{filename}'
 
 
 class ImageAlbum(models.Model):
