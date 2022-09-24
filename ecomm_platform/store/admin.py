@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Good
+from .models import Product
 
 
 # Register your models here.
-@admin.register(Good)
-class GoodAdmin(admin.ModelAdmin):
-    list_display = ('article', 'type', 'name', 'price')
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('article_name', 'price', 'name')
 
