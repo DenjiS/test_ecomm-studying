@@ -27,6 +27,7 @@ class Tag(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(default=None)
     album = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='model_cat')
 
     class Meta:
@@ -44,6 +45,7 @@ class Product(models.Model):
         validators=[MinValueValidator(limit_value=0.99), ]
     )
     name = models.CharField(max_length=255)
+    description = models.TextField(default=None)
     album = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='prod_model')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name='products')
