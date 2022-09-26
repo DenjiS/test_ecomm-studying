@@ -10,6 +10,9 @@ class ImageInLine(admin.StackedInline):
 class ImageAlbumAdmin(admin.ModelAdmin):
     inlines = [ImageInLine, ]
 
+    def has_module_permission(self, request):
+        return False
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -19,3 +22,4 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('article_name', 'price', 'name')
+    list_filter = ('category__name',)
