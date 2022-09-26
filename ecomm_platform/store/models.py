@@ -16,6 +16,9 @@ class Image(models.Model):
 class Tag(models.Model):
     word = models.CharField(max_length=63)
     url = models.URLField(default=None)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
 
 
 class Category(models.Model):
@@ -28,9 +31,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    article_name = models.CharField(
+    article_name = models.SlugField(
         max_length=10,
-        validators=[RegexValidator(regex=r'^[A-I]{1}[J-R]{1}[S-Z]{1}0{4}\d{3}$'), ]
+        validators=[RegexValidator(regex=r'^[A-I]{1}[J-R]{1}[S-Z]{1}0{4}\d{3}$'), ],
+        unique=True
     )
     price = models.DecimalField(
         max_digits=10,
@@ -41,4 +45,4 @@ class Product(models.Model):
     description = models.TextField(default=None)
     images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, related_name='products')
+    tags = GenericRelation(Tag, related_name='products')
