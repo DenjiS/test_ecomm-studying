@@ -21,9 +21,6 @@ class Image(models.Model):
 class Tag(models.Model):
     word = models.CharField(max_length=63)
     url = models.URLField(default=None)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
 
 
 class Category(models.Model):
@@ -50,4 +47,4 @@ class Product(models.Model):
     description = models.TextField(default=None)
     images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = GenericRelation(Tag, related_name='products')
+    tags = models.ManyToManyField(Tag, related_name='products')

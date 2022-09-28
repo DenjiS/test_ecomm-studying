@@ -8,8 +8,12 @@ class ImagesInline(GenericStackedInline):  # stacked
     model = Image
 
 
-class TagsInline(GenericTabularInline):  # tabular
-    model = Tag
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('word', 'url')
+
+    def has_module_permission(self, request):
+        return False
 
 
 @admin.register(Category)
@@ -22,4 +26,4 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('article_name', 'price', 'name')
     list_filter = ('category__name',)
-    inlines = [ImagesInline, TagsInline, ]
+    inlines = [ImagesInline, ]
