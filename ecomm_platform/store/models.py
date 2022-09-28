@@ -12,6 +12,11 @@ class Image(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
+    def save(self, **kwargs):
+        if self.default:
+            Image.objects.filter(content_type=self.content_type, object_id=self.object_id).update(default=False)
+        super().save(**kwargs)
+
 
 class Tag(models.Model):
     word = models.CharField(max_length=63)
