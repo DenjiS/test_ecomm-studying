@@ -20,7 +20,10 @@ class Image(models.Model):
 
 class Tag(models.Model):
     word = models.CharField(max_length=63)
-    url = models.URLField(default=None)
+    url = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.word
 
 
 class Category(models.Model):
