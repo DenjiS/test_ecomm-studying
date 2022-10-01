@@ -12,14 +12,11 @@
         <li>
             <h3>{{ product.name }}</h3>
             <p>{{ product.description }}</p>
-
         </li>
     {% endfor %}
     </ul>
-{% else %}
+    {% else %}
     <p>No products are available.</p>
-{% endif %}
-
-
+    {% endif %}
 </body>
 </html>
