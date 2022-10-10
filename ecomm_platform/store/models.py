@@ -1,42 +1,45 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+
 from django.core.validators import RegexValidator, MinValueValidator
 
 
-def get_upload_path(instance, filename):
-    if hasattr(instance, 'cat_model'):
-        return f'images/cat/{instance.album.cat_model.name}/{filename}'
-    elif hasattr(instance, 'prod_model'):
-        return f'images/prod/{instance.album.prod_model.name}/{filename}'
-
-
-class ImageAlbum(models.Model):
-    def default(self):
-        return self.images.filter(default=True).first()
-
-
 class Image(models.Model):
-    image = models.ImageField(upload_to=get_upload_path)
+    image = models.ImageField(upload_to='images/')
     default = models.BooleanField(default=False)
-    album = models.ForeignKey(ImageAlbum, on_delete=models.CASCADE, related_name='images')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def save(self, **kwargs):
+        if self.default:
+            Image.objects.filter(content_type=self.content_type, object_id=self.object_id).update(default=False)
+        super().save(**kwargs)
 
 
 class Tag(models.Model):
     word = models.CharField(max_length=63)
-    url = models.URLField(default=None)
+    url = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.word
 
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    album = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='model_cat')
+    description = models.TextField(default=None)
+    images = GenericRelation(Image)
 
     class Meta:
         verbose_name_plural = 'categories'
 
 
 class Product(models.Model):
-    article_name = models.CharField(
+    article_name = models.SlugField(
         max_length=10,
-        validators=[RegexValidator(regex=r'^[A-I]{1}[J-R]{1}[S-Z]{1}0{4}\d{3}$'), ]
+        validators=[RegexValidator(regex=r'^[A-I]{1}[J-R]{1}[S-Z]{1}0{4}\d{3}$'), ],
+        unique=True
     )
     price = models.DecimalField(
         max_digits=10,
@@ -44,6 +47,7 @@ class Product(models.Model):
         validators=[MinValueValidator(limit_value=0.99), ]
     )
     name = models.CharField(max_length=255)
-    album = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='prod_model')
+    description = models.TextField(default=None)
+    images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name='products')
