@@ -2,13 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from .models import Product
+from .models import Category
 
 
-def catalog(request):
-    product_model = Product.objects.all()
-    template = loader.get_template('store/index.html')
+def home(request):  # TODO: parent class view, category model on every page
+    category_model = Category.objects.all()
+    template = loader.get_template('store/home.html')
     context = {
-        'product_model': product_model
+        'category_model': category_model
     }
     return HttpResponse(template.render(context, request))

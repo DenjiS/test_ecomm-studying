@@ -1,0 +1,48 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkorange">
+    <!-- logo -->
+    <a class="navbar-brand" href="#">
+        <img src="{% static 'img/logo.svg' %}" width="40" height="40" alt="" loading="lazy">
+        Store-name
+    </a>
+    <!-- toggler button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- toggled part -->
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav">
+            <!-- Home -->
+            <li class="nav-item active">
+                <a href="#" class="nav-link">Home</a>
+            </li>
+            <!-- Catalog -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownCatalogLink"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" href="#" class="nav-link">
+                    Catalog
+                </a>
+                {% if category_model %}
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownCatalogLink">
+                    {% for category in category_model %}
+                    <a class="dropdown-item" href="#">{{ category.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </li>
+            <!-- Contacts -->
+            <li class="nav-item">
+                <a href="#" class="nav-link">Contacts</a>
+            </li>
+        </ul>
+        <!-- search -->
+        <form class="form-inline mx-auto">
+            <input class="form-control my-1" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-secondary ml-1 mb-1">Find</button>
+        </form>
+        <button class="btn btn-primary mx-1">Sign in</button>
+        <button class="btn btn-success mx-1">Sign up</button>
+    </div>
+</nav>

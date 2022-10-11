@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator, MinValueValidator
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='static/img')
     default = models.BooleanField(default=False)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -34,6 +34,9 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'categories'
 
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     article_name = models.SlugField(
@@ -51,3 +54,9 @@ class Product(models.Model):
     images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name='products')
+    rating = models.PositiveIntegerField
+    hot = models.BooleanField(default=False, editable=False)  # TODO: True, when rating >= 1000
+    new = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
