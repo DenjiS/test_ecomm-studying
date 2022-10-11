@@ -54,3 +54,9 @@ class Product(models.Model):
     images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name='products')
+    rating = models.PositiveIntegerField
+    hot = models.BooleanField(default=False, editable=False)  # TODO: True, when rating >= 1000
+    new = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
