@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline, GenericTabularInline
 
-from .models import Image, Tag, Category, Product
+from .models import Image, Tag, Category, Product, Promo
 
 
 class ImagesInline(GenericStackedInline):  # stacked
@@ -26,4 +26,10 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('article_name', 'price', 'name')
     list_filter = ('category__name',)
+    inlines = [ImagesInline, ]
+
+
+@admin.register(Promo)
+class PromoAdmin(admin.ModelAdmin):
+    list_display = ('name',)
     inlines = [ImagesInline, ]

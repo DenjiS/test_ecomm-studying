@@ -53,10 +53,32 @@ class Product(models.Model):
     description = models.TextField(default=None)
     images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
     tags = models.ManyToManyField(Tag, related_name='products')
-    rating = models.PositiveIntegerField
-    hot = models.BooleanField(default=False, editable=False)  # TODO: True, when rating >= 1000
+    rating = models.PositiveIntegerField(default=0, editable=False)
+    hot = models.BooleanField(default=False, editable=False)
     new = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    def sold(self):
+        self.rating += 1
+        self.hot = True if self.rating >= 1000 else False
+
+
+class Promo(models.Model):
+    name = models.CharField(max_length=255)
+    active = models.BooleanField(default=True)
+    url = models.URLField(blank=True)
+
+    slider_width, slider_height = 800, 400
+    slider_image = models.ImageField(upload_to='static/img', width_field='slider_width', height_field='slider_height')
+    images = GenericRelation(Image)
+
+    header = models.CharField(max_length=31)
+    short_text = models.CharField(max_length=127)
+    text = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
