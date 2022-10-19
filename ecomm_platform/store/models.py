@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator, MinValueValidator
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='static/img')
+    image = models.ImageField(upload_to='upload/')
     default = models.BooleanField(default=False)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -73,7 +73,11 @@ class Promo(models.Model):
     url = models.URLField(blank=True)
 
     slider_width, slider_height = 800, 400
-    slider_image = models.ImageField(upload_to='static/img', width_field='slider_width', height_field='slider_height')
+    slider_image = models.ImageField(
+        upload_to='upload/',
+        width_field='slider_width',
+        height_field='slider_height'
+    )
     images = GenericRelation(Image)
 
     header = models.CharField(max_length=31)

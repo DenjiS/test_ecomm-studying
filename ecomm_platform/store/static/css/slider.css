@@ -1,0 +1,10 @@
+.carousel {
+    padding: 0;
+}
+
+.carousel-caption {  /* text padding */
+    bottom: 30px;
+}
+.carousel-item {
+    height: 23rem;
+}

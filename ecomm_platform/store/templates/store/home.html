@@ -2,7 +2,43 @@
 {% load static %}
 
 {% block title %} Project-name {% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/slider.css' %}">
+{% endblock %}
 
 {% block header %}
     {% include './block/slider.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="row my-4">
+        <div class="col-md-3">
+            <img src="{% static 'img/mainpage-features-icon-1.svg' %}" width="60" height="60" alt="" loading="lazy">
+            <h4>Word</h4>
+            <p>
+                text text text text text text text text text text text text text text text text text text text text text
+            </p>
+        </div>
+        <div class="col-md-3">
+            <img src="{% static 'img/mainpage-features-icon-2.svg' %}" width="60" height="60" alt="" loading="lazy">
+            <h4>Word</h4>
+            <p>
+                text text text text text text text text text text text text text text text text text text text text text
+            </p>
+        </div>
+        <div class="col-md-3">
+            <img src="{% static 'img/mainpage-features-icon-3.svg' %}" width="60" height="60" alt="" loading="lazy">
+            <h4>Word</h4>
+            <p>
+                text text text text text text text text text text text text text text text text text text text text text
+            </p>
+        </div>
+        <div class="col-md-3">
+            <img src="{% static 'img/mainpage-features-icon-4.svg' %}" width="60" height="60" alt="" loading="lazy">
+            <h4>Word</h4>
+            <p>
+                text text text text text text text text text text text text text text text text text text text text text
+            </p>
+        </div>
+    </div>
 {% endblock %}
