@@ -1,6 +1,6 @@
 {% load static %}
 {% if slider_model %}
-<div id="promoSlider" class="carousel slide col-lg-11 mx-auto" data-ride="carousel">
+<div id="promoSlider" class="carousel slide col-lg-9 mx-auto" data-ride="carousel">
     <ol class="carousel-indicators">
         {% for promo in slider_model %}
         <li data-target="promoSlider" data-slide-to="{{ promo.pk|add:"-1" }}"
@@ -11,7 +11,7 @@
     <div class="carousel-inner">
         {% for promo in slider_model %}
         <div class="carousel-item {% if promo == slider_model.0 %} active {% endif %}">
-            <img src="{{ promo.slider_image.url }}" class="d-block w-100">
+            <img src="{{ promo.slider_image.url }}" class="d-block w-100" alt="" loading="lazy">
             <div class="carousel-caption d-none d-md-block">
                 <h5>{{ promo.header }}</h5>
                 <p>{{ promo.short_text }}</p>

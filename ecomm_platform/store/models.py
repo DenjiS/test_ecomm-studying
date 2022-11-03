@@ -62,7 +62,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    def sold(self):
+    def rating_up(self):
         self.rating += 1
         self.hot = True if self.rating >= 1000 else False
 
