@@ -15,7 +15,7 @@
         <ul class="navbar-nav">
             <!-- Home -->
             <li class="nav-item active">
-                <a href="#" class="nav-link">Home</a>
+                <a href="/store/" class="nav-link">Home</a>
             </li>
             <!-- Catalog -->
             <li class="nav-item dropdown">
@@ -27,7 +27,7 @@
                 {% if category_model %}
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownCatalogLink">
                     {% for category in category_model %}
-                    <a class="dropdown-item" href="#">{{ category.name }}</a>
+                    <a class="dropdown-item" href="/store/{{ category.slug }}/">{{ category.name }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}

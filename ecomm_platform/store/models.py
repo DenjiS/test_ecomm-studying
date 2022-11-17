@@ -18,16 +18,10 @@ class Image(models.Model):
         super().save(**kwargs)
 
 
-class Tag(models.Model):
-    word = models.CharField(max_length=63)
-    url = models.URLField(blank=True)
-
-    def __str__(self):
-        return self.word
-
-
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
     description = models.TextField(default=None)
     images = GenericRelation(Image)
 
@@ -39,22 +33,18 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    article_name = models.SlugField(
-        max_length=10,
-        validators=[RegexValidator(regex=r'^[A-I]{1}[J-R]{1}[S-Z]{1}0{4}\d{3}$'), ],
-        unique=True
-    )
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(limit_value=0.99), ]
     )
-    name = models.CharField(max_length=255)
     description = models.TextField(default=None)
     images = GenericRelation(Image)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-    tags = models.ManyToManyField(Tag, related_name='products')
     rating = models.PositiveIntegerField(default=0, editable=False)
     hot = models.BooleanField(default=False, editable=False)
     new = models.BooleanField(default=True)
